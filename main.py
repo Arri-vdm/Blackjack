@@ -34,7 +34,6 @@ if start_game in ("d", "deal"):
     # How many random cards to generate
     num_cards = 2
 
-
     # Function to select a certain number of cards
     def random_card_selector(number_of_cards):
         """Assign the number of cards needed to a variable:
@@ -53,30 +52,97 @@ if start_game in ("d", "deal"):
     dealer_cards = random_card_selector(number_of_cards=num_cards)
 
     # Testing
-    print(f"\nplayer_cards: {player_cards}")
-    print(f"\ndealer_cards: {dealer_cards}")
+    # print(f"\nplayer_cards: {player_cards}")
+    # print(f"\ndealer_cards: {dealer_cards}\n")
+    # print("---------------------------------------------------------------")
 
     # Score: Assign 0 to player
     player_score = 0
     # Score: Assign 0 to dealer
     dealer_score = 0
     initial_dealer_score = 0
-    
+
     # Slice: Assign a slice
     player_slice = sum(player_cards[:])
     dealer_slice = sum(dealer_cards[:])
     initial_dealer_slice = dealer_cards[0]
-    
+
     # Update scores
     player_score += player_slice
     dealer_score += dealer_slice
     initial_dealer_score += initial_dealer_slice
 
     # Testing
-    print(f"\nplayer_score: {player_score}")
-    print(f"\ninitial_dealer_score: {initial_dealer_score}")
-    print(f"\ndealer_score: {dealer_score}")
+    # print(f"\nplayer_score: {player_score}")
+    # print(f"\ninitial_dealer_score: {initial_dealer_score}")
+    # print(f"\ndealer_score: {dealer_score}\n")
+    # print("---------------------------------------------------------------")
 
-# elif start_game in ("e", "exit"):
-#     clear()
-#     print("\nSorry to see you go!\nGoodbye...\n\n")
+    ###############################################################
+    #                          INITIALLY:
+    ###############################################################
+    def initial_output():
+        """Prints all the initial outputs and more"""
+        clear()
+        print(logo)
+        print("\n---------------------------------------------------------------\n")
+        print(f"Player's Cards:     {player_cards}")
+        print(f"Player's Score:     {player_score}")
+        print(f"\n")
+        print(f"Dealer's Card(s):   {initial_dealer_slice}")
+        print(f"Dealer's Score:     {initial_dealer_score}")
+        print("\n---------------------------------------------------------------\n\n")
+    
+
+    def normal_output():
+        """Prints all the initial outputs and more"""
+        clear()
+        print(logo)
+        print("\n---------------------------------------------------------------\n")
+        print(f"Player's Cards:     {player_cards}")
+        print(f"Player's Score:     {player_score}")
+        print(f"\n")
+        print(f"Dealer's Card(s):   {dealer_cards}")
+        print(f"Dealer's Score:     {dealer_score}")
+        print("\n---------------------------------------------------------------\n\n")
+
+    # DEALER: Keep checking if value over 21, replace all 11's 
+    # with 1, until not the case 
+    if dealer_score > 21:
+        for position in range(len(dealer_cards)):
+            if dealer_cards[position] == 11 and dealer_score > 21:
+                dealer_cards[position] = 1
+                dealer_score = sum(dealer_cards)
+
+    # PLAYER: Keep checking if value over 21, replace all 11's 
+    # with 1, until not the case 
+    elif player_score > 21:
+        for position in range(len(player_cards)):
+            if player_cards[position] == 11 and player_score > 21:
+                player_cards[position] = 1
+                player_score = sum(player_cards)
+
+    # If dealer_score and player_score > 21 = dealer wins
+    elif dealer_score == 21 and player_score == 21:
+        normal_output()
+        print(f" 😭 DEALER WINS!! 😭\n\n")
+        print("---------------------------------------------------------------\n\n")
+
+    # If dealer_score > 21 = dealer wins
+    elif dealer_score == 21:
+        normal_output()
+        print(f" 😭 DEALER WINS!! 😭\n\n")
+        print("---------------------------------------------------------------\n\n")
+
+    # If player_score > 21 = player wins
+    elif player_score == 21:
+        normal_output()
+        print(f" 😎 PLAYER WINS!! 😎 \n\n")
+        print("---------------------------------------------------------------\n\n")
+    
+    else:
+        initial_output()
+
+elif start_game in ("e", "exit"):
+     clear()
+     print("\nSorry to see you go!\nGoodbye...\n\n")
