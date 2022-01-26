@@ -249,6 +249,28 @@ if start_game in ("d", "deal"):
                         # Is it the end of the game
                         end_of_game = True 
 
+                # If player score > 21 and dealer score < 21, the dealer wins
+                if player_score > 21 and dealer_score < 21:
+                    normal_output()
+                    print(f" 😭 BUST! DEALER WINS!! 😭\n")
+                    print(
+                        "---------------------------------------------------------------\n\n"
+                    )
+                    # Is it the end of the game
+                    end_of_game = True
+                
+
+                # If dealer score > 21 and player score < 21, the player wins
+                if dealer_score > 21 and player_score < 21:
+                    normal_output()
+                    print(f" 😭 BUST! PLAYER WINS!! 😭\n")
+                    print(
+                        "---------------------------------------------------------------\n\n"
+                    )
+                    # Is it the end of the game
+                    end_of_game = True
+
+
                 # If dealer_score = 21 then dealer wins
                 if dealer_score == 21:
                     if 10 and 11 in dealer_cards:
@@ -324,6 +346,9 @@ if start_game in ("d", "deal"):
         # The 1st 'HIT'
         if hit_or_stand in ("h", "hit"): #and len(hits) == 0:
 
+            # For every "hit", add 1 to the hits list
+            hits += 1
+            
             # Give the Player another card
             player_card_1 = random.choice(cards)
             player_cards.append(player_card_1)
@@ -350,8 +375,7 @@ if start_game in ("d", "deal"):
             # Check if there is a winner
             inspect_winner(dealer_score=dealer_score, player_score=player_score, end_of_game=end_of_game)
 
-            # Add a hit to the list
-            hits += 1
+
 
 
 elif start_game in ("e", "exit"):
