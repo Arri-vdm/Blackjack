@@ -1,12 +1,5 @@
 ############### Blackjack Project #####################
 
-# Difficulty Normal 😎: Use all Hints below to complete the project.
-# Difficulty Hard 🤔: Use only Hints 1, 2, 3 to complete the project.
-# Difficulty Extra Hard 😭: Only use Hints 1 & 2 to complete the project.
-# Difficulty Expert 🤯: Only use Hint 1 to complete the project.
-
-############### Blackjack Project Start #####################
-
 # Imports
 from art import logo
 import random
@@ -94,54 +87,73 @@ if start_game in ("d", "deal"):
         print("\n---------------------------------------------------------------\n\n")
     
 
-    def normal_output():
-        """Prints all the initial outputs and more"""
-        clear()
-        print(logo)
-        print("\n---------------------------------------------------------------\n")
-        print(f"Player's Cards:     {player_cards}")
-        print(f"Player's Score:     {player_score}")
-        print(f"\n")
-        print(f"Dealer's Card(s):   {dealer_cards}")
-        print(f"Dealer's Score:     {dealer_score}")
-        print("\n---------------------------------------------------------------\n\n")
+    def inspect_winner(dealer_score, player_score):
+        """The function inspects the rules to 
+        determine if there is a winner...
+        """
+        def normal_output():
+            """Prints all the initial outputs and more"""
+            clear()
+            print(logo)
+            print("\n---------------------------------------------------------------\n")
+            print(f"Player's Cards:     {player_cards}")
+            print(f"Player's Score:     {player_score}")
+            print(f"\n")
+            print(f"Dealer's Card(s):   {dealer_cards}")
+            print(f"Dealer's Score:     {dealer_score}")
+            print("\n---------------------------------------------------------------\n\n")
 
-    # DEALER: Keep checking if value over 21, replace all 11's 
-    # with 1, until not the case 
-    if dealer_score > 21:
-        for position in range(len(dealer_cards)):
-            if dealer_cards[position] == 11 and dealer_score > 21:
-                dealer_cards[position] = 1
-                dealer_score = sum(dealer_cards)
 
-    # PLAYER: Keep checking if value over 21, replace all 11's 
-    # with 1, until not the case 
-    elif player_score > 21:
-        for position in range(len(player_cards)):
-            if player_cards[position] == 11 and player_score > 21:
-                player_cards[position] = 1
-                player_score = sum(player_cards)
+        # DEALER: Keep checking if value over 21, replace all 11's 
+        # with 1, until not the case 
+        if dealer_score > 21:
+            for position in range(len(dealer_cards)):
+                if dealer_cards[position] == 11 and dealer_score > 21:
+                    dealer_cards[position] = 1
+                    dealer_score = sum(dealer_cards)
 
-    # If dealer_score and player_score > 21 = dealer wins
-    elif dealer_score == 21 and player_score == 21:
-        normal_output()
-        print(f" 😭 DEALER WINS!! 😭\n\n")
-        print("---------------------------------------------------------------\n\n")
+        # PLAYER: Keep checking if value over 21, replace all 11's 
+        # with 1, until not the case 
+        elif player_score > 21:
+            for position in range(len(player_cards)):
+                if player_cards[position] == 11 and player_score > 21:
+                    player_cards[position] = 1
+                    player_score = sum(player_cards)
 
-    # If dealer_score > 21 = dealer wins
-    elif dealer_score == 21:
-        normal_output()
-        print(f" 😭 DEALER WINS!! 😭\n\n")
-        print("---------------------------------------------------------------\n\n")
+        # If dealer_score and player_score > 21 = dealer wins
+        elif dealer_score == 21 and player_score == 21:
+            normal_output()
+            print(f" 😭 DEALER WINS!! 😭\n\n")
+            print("---------------------------------------------------------------\n\n")
 
-    # If player_score > 21 = player wins
-    elif player_score == 21:
-        normal_output()
-        print(f" 😎 PLAYER WINS!! 😎 \n\n")
-        print("---------------------------------------------------------------\n\n")
+        # If dealer_score > 21 = dealer wins
+        elif dealer_score == 21:
+            normal_output()
+            print(f" 😭 DEALER WINS!! 😭\n\n")
+            print("---------------------------------------------------------------\n\n")
+
+        # If player_score > 21 = player wins
+        elif player_score == 21:
+            normal_output()
+            print(f" 😎 PLAYER WINS!! 😎 \n\n")
+            print("---------------------------------------------------------------\n\n")
+
+
+    inspect_winner(dealer_score=dealer_score, player_score=player_score)
     
-    else:
+    # Only continue if both player's and dealer's scores are below 21
+    if player_score < 21 and dealer_score < 21:
         initial_output()
+
+        ####################################################################
+        #                      NEXT ROUND
+        ####################################################################
+        another_card = input(
+            f"Type 'h' + enter to HIT and get another card, or...\nType 's' + enter to STAND and not get another card...\n"
+        ).lower()
+
+        # If 'HIT', player gets
+
 
 elif start_game in ("e", "exit"):
      clear()
