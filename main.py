@@ -109,161 +109,206 @@ if start_game in ("d", "deal"):
             "\n---------------------------------------------------------------\n"
             )
 
-    def inspect_winner(dealer_score, player_score):
+    # Is it the end of the game
+    end_of_game = False
+    
+    # Inspect to see if there is a winner
+    def inspect_winner(dealer_score, player_score, end_of_game):
         """Inspects the rules to determine
            if there is a winner...
         """
 
-        # DEALER: Keep checking if value over 21, replace all 11's
-        # with 1, until not the case
-        if dealer_score > 21:
-            for position in range(len(dealer_cards)):
-                if dealer_cards[position] == 11 and dealer_score > 21:
-                    dealer_cards[position] = 1
-                    dealer_score = sum(dealer_cards)
+        # While the game coninues
+        if end_of_game == False:
 
-        # PLAYER: Keep checking if value over 21, replace all 11's
-        # with 1, until not the case
-        if player_score > 21:
-            for position in range(len(player_cards)):
-                if player_cards[position] == 11 and player_score > 21:
-                    player_cards[position] = 1
-                    player_score = sum(player_cards)
-
-        # If player cards is equal to two cards, certain rules apply
-        if len(player_cards) <= 2:
-
-            # If dealer and player have Blackjack, the dealer wins
-            if dealer_score == 21 and player_score == 21:
-                if 10 and 11 in dealer_cards or 10 and 11 in player_cards:
-                    normal_output()
-                    print(f" 😭 BLACKJACK: DEALER WINS! 😭\n")
-                    print(
-                        "---------------------------------------------------------------\n\n"
-                    )
-                else:
-                    normal_output()
-                    print(f" 🙄 DRAW 🙄\n")
-                    print(
-                        "---------------------------------------------------------------\n\n"
-                    ) 
-
-            # If dealer_score = 21 then dealer wins
-            if dealer_score == 21:
-                if 10 and 11 in dealer_cards:
-                    normal_output()
-                    print(f" 😭 BLACKJACK: DEALER WINS! 😭\n")
-                    print(
-                        "---------------------------------------------------------------\n\n"
-                    )
-                else:
-                    normal_output()
-                    print(f" 😭 DEALER WINS!! 😭\n")
-                    print(
-                        "---------------------------------------------------------------\n\n"
-                    )
-
-            # If player_score = 21 then player wins
-            if player_score == 21:
-                if 10 and 11 in player_cards:
-                    normal_output()
-                    print(f" 😎 BLACKJACK: PLAYER WINS!! 😎\n")
-                    print(
-                        "---------------------------------------------------------------\n\n"
-                    )
-                else:
-                    normal_output()
-                    print(f" 😎 PLAYER WINS!! 😎\n")
-                    print(
-                        "---------------------------------------------------------------\n\n"
-                    )
-
-        # If either's is equal to more than two cards, certain rules apply
-        elif len(player_cards) > 2 or len(dealer_cards) > 2:
-
-            # End Game: Both scores > 21
-            if dealer_score > 21 and player_score > 21:
-                normal_output()
-                print(f" 😭 BUST! DEALER WINS! 😭\n")
-                print(
-                    "---------------------------------------------------------------\n\n"
-                )
-
-            # End Game: Dealer's score > 21
+            # DEALER: Keep checking if value over 21, replace all 11's
+            # with 1, until not the case
             if dealer_score > 21:
-                normal_output()
-                print(f" 😎 BUST! PLAYER WINS! 😎\n")
-                print(
-                    "---------------------------------------------------------------\n\n"
-                )
+                for position in range(len(dealer_cards)):
+                    if dealer_cards[position] == 11 and dealer_score > 21:
+                        dealer_cards[position] = 1
+                        dealer_score = sum(dealer_cards)
 
-            # End Game: Player's score > 21
+            # PLAYER: Keep checking if value over 21, replace all 11's
+            # with 1, until not the case
             if player_score > 21:
-                normal_output()
-                print(f" 😭 BUST! DEALER WINS! 😭\n")
-                print(
-                    "---------------------------------------------------------------\n\n"
-                )
+                for position in range(len(player_cards)):
+                    if player_cards[position] == 11 and player_score > 21:
+                        player_cards[position] = 1
+                        player_score = sum(player_cards)
 
-            # If dealer and player have Blackjack, the dealer wins
-            if dealer_score == 21 and player_score == 21:
-                if 10 and 11 in dealer_cards or 10 and 11 in player_cards:
-                    normal_output()
-                    print(f" 🙄 BLACKJACK: DRAW! 🙄\n")
-                    print(
-                        "---------------------------------------------------------------\n\n"
-                    )
-                else:
-                    normal_output()
-                    print(f" 🙄 DRAW 🙄\n")
-                    print(
-                        "---------------------------------------------------------------\n\n"
-                    ) 
+            # If player cards is equal to two cards, certain rules apply
+            if len(player_cards) <= 2:
 
-            # If dealer_score = 21 then dealer wins
-            if dealer_score == 21:
-                if 10 and 11 in dealer_cards:
-                    normal_output()
-                    print(f" 😭 BLACKJACK: DEALER WINS! 😭\n")
-                    print(
-                        "---------------------------------------------------------------\n\n"
-                    )
-                else:
-                    normal_output()
-                    print(f" 😭 DEALER WINS!! 😭\n")
-                    print(
-                        "---------------------------------------------------------------\n\n"
-                    )
+                # If dealer and player have Blackjack, the dealer wins
+                if dealer_score == 21 and player_score == 21:
+                    if 10 and 11 in dealer_cards or 10 and 11 in player_cards:
+                        normal_output()
+                        print(f" 😭 BLACKJACK: DEALER WINS!! 😭\n")
+                        print(
+                            "---------------------------------------------------------------\n\n"
+                        )
+                        # Is it the end of the game
+                        end_of_game = True
+                    else:
+                        normal_output()
+                        print(f" 🙄 DRAW!! 🙄\n")
+                        print(
+                            "---------------------------------------------------------------\n\n"
+                        ) 
+                        # Is it the end of the game
+                        end_of_game = True
 
-            # If player_score = 21 then player wins
-            if player_score == 21:
-                if 10 and 11 in player_cards:
-                    normal_output()
-                    print(f" 😎 BLACKJACK: PLAYER WINS!! 😎\n")
-                    print(
-                        "---------------------------------------------------------------\n\n"
-                    )
-                else:
+                # If dealer_score = 21 then dealer wins
+                if dealer_score == 21:
+                    if 10 and 11 in dealer_cards:
+                        normal_output()
+                        print(f" 😭 BLACKJACK: DEALER WINS!! 😭\n")
+                        print(
+                            "---------------------------------------------------------------\n\n"
+                        )
+                        # Is it the end of the game
+                        end_of_game = True
+                    else:
+                        normal_output()
+                        print(f" 😭 DEALER WINS!! 😭\n")
+                        print(
+                            "---------------------------------------------------------------\n\n"
+                        )
+                        # Is it the end of the game
+                        end_of_game = True
+
+                # If player_score = 21 then player wins
+                if player_score == 21:
+                    if 10 and 11 in player_cards:
+                        normal_output()
+                        print(f" 😎 BLACKJACK: PLAYER WINS!! 😎\n")
+                        print(
+                            "---------------------------------------------------------------\n\n"
+                        )
+                        # Is it the end of the game
+                        end_of_game = True
+                    else:
+                        normal_output()
+                        print(f" 😎 PLAYER WINS!! 😎\n")
+                        print(
+                            "---------------------------------------------------------------\n\n"
+                        )
+                        # Is it the end of the game
+                        end_of_game = True
+
+            # If either's is equal to more than two cards, certain rules apply
+            elif len(player_cards) > 2 or len(dealer_cards) > 2:
+
+                # End Game: Both scores > 21
+                if dealer_score > 21 and player_score > 21:
                     normal_output()
                     print(f" 😎 PLAYER WINS!! 😎\n")
                     print(
                         "---------------------------------------------------------------\n\n"
                     )
+                    # Is it the end of the game
+                    end_of_game = True
 
-            # If dealer_score and player_score are the same: Draw
-            if dealer_score == player_score:
-                normal_output()
-                print(f" 🙄 DRAW 🙄\n")
-                print(
-                    "---------------------------------------------------------------\n\n"
-                )
+                # End Game: Dealer's score > 21
+                if dealer_score > 21:
+                    normal_output()
+                    print(f" 😎 BUST! PLAYER WINS!! 😎\n")
+                    print(
+                        "---------------------------------------------------------------\n\n"
+                    )
+                    # Is it the end of the game
+                    end_of_game = True
+
+                # End Game: Player's score > 21
+                if player_score > 21:
+                    normal_output()
+                    print(f" 😭 BUST! DEALER WINS!! 😭\n")
+                    print(
+                        "---------------------------------------------------------------\n\n"
+                    )
+                    # Is it the end of the game
+                    end_of_game = True
+
+                # If dealer and player have Blackjack, the dealer wins
+                if dealer_score == 21 and player_score == 21:
+                    if 10 and 11 in dealer_cards or 10 and 11 in player_cards:
+                        normal_output()
+                        print(f" 🙄 BLACKJACK: DRAW!! 🙄\n")
+                        print(
+                            "---------------------------------------------------------------\n\n"
+                        )
+                        # Is it the end of the game
+                        end_of_game = True
+                    else:
+                        normal_output()
+                        print(f" 🙄 DRAW!! 🙄\n")
+                        print(
+                            "---------------------------------------------------------------\n\n"
+                        )
+                        # Is it the end of the game
+                        end_of_game = True 
+
+                # If dealer_score = 21 then dealer wins
+                if dealer_score == 21:
+                    if 10 and 11 in dealer_cards:
+                        normal_output()
+                        print(f" 😭 BLACKJACK: DEALER WINS!! 😭\n")
+                        print(
+                            "---------------------------------------------------------------\n\n"
+                        )
+                        # Is it the end of the game
+                        end_of_game = True
+                    else:
+                        normal_output()
+                        print(f" 😭 DEALER WINS!! 😭\n")
+                        print(
+                            "---------------------------------------------------------------\n\n"
+                        )
+                        # Is it the end of the game
+                        end_of_game = True
+                
+                # If player_score = 21 then player wins
+                if player_score == 21:
+                    if 10 and 11 in player_cards:
+                        normal_output()
+                        print(f" 😎 BLACKJACK: PLAYER WINS!! 😎\n")
+                        print(
+                            "---------------------------------------------------------------\n\n"
+                        )
+                        # Is it the end of the game
+                        end_of_game = True
+                    else:
+                        normal_output()
+                        print(f" 😎 PLAYER WINS!! 😎\n")
+                        print(
+                            "---------------------------------------------------------------\n\n"
+                        )
+                        # Is it the end of the game
+                        end_of_game = True
+
+                # If dealer_score and player_score are the same: Draw
+                if dealer_score == player_score:
+                    normal_output()
+                    print(f" 🙄 DRAW!! 🙄\n")
+                    print(
+                        "---------------------------------------------------------------\n\n"
+                    )
+                    # Is it the end of the game
+                    end_of_game = True
+        
+        # Set end of game back to False
+        else:
+            # Is it the end of the game
+            end_of_game = False
 
 
     # Check if there is a winner
-    inspect_winner(dealer_score=dealer_score, player_score=player_score)
+    inspect_winner(dealer_score=dealer_score, player_score=player_score, end_of_game=end_of_game)
+
 
     # Only continue if both player's and dealer's scores are below 21
-    if player_score < 21 and dealer_score < 21:
+    while (end_of_game == False) and (player_score < 21 and dealer_score < 21):
         initial_output()
 
         ###########################################################
@@ -273,20 +318,41 @@ if start_game in ("d", "deal"):
             f"Type 'h' + enter to HIT and get another card, or...\nType 's' + enter to STAND and not get another card...\n"
         ).lower()
 
-        # If 'HIT', player gets
-        if hit_or_stand in ("h", "hit"):
-            # Give the Player another card
-            another_card = random.choice(cards)
-            player_cards.append(another_card)
+        # Create a list of hits
+        hits = 0
 
-            # Update player sscore
+        # The 1st 'HIT'
+        if hit_or_stand in ("h", "hit"): #and len(hits) == 0:
+
+            # Give the Player another card
+            player_card_1 = random.choice(cards)
+            player_cards.append(player_card_1)
+
+            # Update player score
             player_score += player_cards[-1]
-            
-            # Check if there is a winner
-            inspect_winner(dealer_score=dealer_score, player_score=player_score)
+
+            # If hits list contains more or equal to 1 element 
+            if hits >= 1:
+                # If player has 21, give dealer more cards
+                if player_score == 21:
+                    # Keep adding cards to dealer until the 
+                    # dealer's score is no longer less than 21
+                    while dealer_score < 21 and not dealer_score >= 21:
+                        # Give the Dealer another card
+                        dealer_card_1 = random.choice(cards)
+                        dealer_cards.append(dealer_card_1)
+                        # Update dealer score
+                        dealer_score += dealer_cards[-1]
 
             # Print output
-            # normal_output()
+            normal_output()
+
+            # Check if there is a winner
+            inspect_winner(dealer_score=dealer_score, player_score=player_score, end_of_game=end_of_game)
+
+            # Add a hit to the list
+            hits += 1
+
 
 elif start_game in ("e", "exit"):
     clear()
