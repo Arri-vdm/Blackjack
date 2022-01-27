@@ -612,8 +612,11 @@ def blackjack():
                     # Create a list of hits
                     hits = 0
 
-                    # The 1st 'HIT'
-                    if hit_or_stand in ("h", "hit"): #and len(hits) == 0:
+                    # Create a list of stand
+                    stand = 0
+
+                    #  'HIT'
+                    if hit_or_stand in ("h", "hit"): 
 
                         # For every "hit", add 1 to the hits list
                         hits += 1
@@ -637,6 +640,37 @@ def blackjack():
                                     dealer_cards.append(dealer_card_1)
                                     # Update dealer score
                                     dealer_score += dealer_cards[-1]
+
+                        # Print output
+                        normal_output()
+
+                        # Check if there is a winner
+                        inspect_winner(dealer_score=dealer_score, player_score=player_score, end_of_game=end_of_game)
+                    
+                    #  'STAND'
+                    if hit_or_stand in ("s", "stand"): 
+                        
+                        # For every "stand", add 1 to the stand list
+                        stand += 1
+
+                        # Give the Dealer another card
+                        dealer_card_1 = random.choice(cards)
+                        dealer_cards.append(dealer_card_1)
+
+                        # Update dealer score
+                        dealer_score += dealer_cards[-1]
+
+                        # If hits list contains more or equal to 1 element 
+                        if stand >= 1:
+
+                            # Keep adding cards to dealer until the 
+                            # dealer's score is no longer less than 21
+                            while dealer_score < 21 and not dealer_score >= 21:
+                                # Give the Dealer another card
+                                dealer_card_1 = random.choice(cards)
+                                dealer_cards.append(dealer_card_1)
+                                # Update dealer score
+                                dealer_score += dealer_cards[-1]
 
                         # Print output
                         normal_output()
