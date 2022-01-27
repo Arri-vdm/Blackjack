@@ -5,6 +5,10 @@ from art import logo
 import random
 from replit import clear
 
+
+# Make sure all is cleared
+clear()
+
 # Start of game
 def blackjack():
 
@@ -28,21 +32,12 @@ def blackjack():
             # A function to restart or exit after playing has begun
             def restart():
                 end_of_blackjack = input(
-                    "Type 'r' + enter to RESTART\nPress 'x' + enter to EXIT...\n"
+                    "Type 'r' + enter to RESTART or to choose from more options...\n"
                     ).lower()
-
                 if end_of_blackjack in ("r", "restart"):
                     clear()
                     blackjack()
-
-                else:
-                    end_of_blackjack = "x"
-                    clear()
-                    print(logo)
-                    print(
-                        "\n---------------------------------------------------------------\n"
-                        )
-                    print("\nSorry to see you go!\nGoodbye...\n\n")
+        
         
             if start_game in ("d", "deal"):
 
@@ -156,7 +151,7 @@ def blackjack():
                                     player_score = sum(player_cards)
 
                         # If player cards is equal to two cards, certain rules apply
-                        if len(player_cards) == 2:
+                        if len(player_cards) <= 2:
                             
                             # If dealer_score = 21 then dealer wins
                             if dealer_score == 21:
@@ -441,7 +436,7 @@ def blackjack():
                                 restart()
 
                         # If either's is equal to more than two cards, certain rules apply
-                        if len(player_cards) >= 3 and len(dealer_cards) >= 2 or len(dealer_cards) >= 2:
+                        if len(player_cards) >= 3 and len(dealer_cards) >= 1 or len(dealer_cards) >= 2:
 
                             # If dealer_score = 21 then dealer wins
                             if dealer_score == 21:
@@ -634,7 +629,7 @@ def blackjack():
                             if player_score == 21:
                                 # Keep adding cards to dealer until the 
                                 # dealer's score is no longer less than 21
-                                while dealer_score < 21 and not dealer_score >= 21:
+                                while dealer_score < 21 and not dealer_score > 21:
                                     # Give the Dealer another card
                                     dealer_card_1 = random.choice(cards)
                                     dealer_cards.append(dealer_card_1)
@@ -680,6 +675,7 @@ def blackjack():
 
             else:
                 clear()
+
                 print(logo)
                 print(
                     "\n---------------------------------------------------------------\n"
