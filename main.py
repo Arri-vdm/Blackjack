@@ -17,32 +17,21 @@ print("---------------------------------------------------------------")
 
 if start_game in ("d", "deal"):
 
-    # Deck of 52 cards
+    # Six Deck of 52 cards
+    # Modern blackjack, as played in most land-based casinos 
+    # from Las Vegas to Macau, uses six to eight decks of the 
+    # standard 52 playing cards.
     cards = [
-        11, 11, 11, 11, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6,
-        6, 6, 7, 7, 7, 7, 8, 8, 8, 8, 9, 9, 9, 9, 10, 10, 10, 10, 10, 10, 10,
-        10, 10, 10, 10, 10, 10, 10, 10, 10
+        11, 11, 11, 11, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6, 7, 7, 7, 7, 8, 8, 8, 8, 9, 9, 9, 9, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10,11, 11, 11, 11, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6, 7, 7, 7, 7, 8, 8, 8, 8, 9, 9, 9, 9, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10,11, 11, 11, 11, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6, 7, 7, 7, 7, 8, 8, 8, 8, 9, 9, 9, 9, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10,11, 11, 11, 11, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6, 7, 7, 7, 7, 8, 8, 8, 8, 9, 9, 9, 9, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10,11, 11, 11, 11, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6, 7, 7, 7, 7, 8, 8, 8, 8, 9, 9, 9, 9, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10,11, 11, 11, 11, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6, 7, 7, 7, 7, 8, 8, 8, 8, 9, 9, 9, 9, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 
     ]
 
-    # How many random cards to generate
-    num_cards = 2
 
-    # Function to select a certain number of cards
-    def random_card_selector(number_of_cards):
-        """Assign the number of cards needed to a variable:
-           E.g. random_card_selector(number_of_cards=num_cards)
-           ----
-            OR
-           ----
-           Assign the number of cards needed to a number:
-           E.g. random_card_selector(number_of_cards=3)
-        """
-        return random.sample(cards, number_of_cards)
+    print(cards)
 
     # Cards: Assign to player
-    player_cards = random_card_selector(number_of_cards=num_cards)
+    player_cards = random.sample(cards, 2)
     # Cards: Assign to dealer
-    dealer_cards = random_card_selector(number_of_cards=num_cards)
+    dealer_cards = random.sample(cards, 2)
 
     # Testing
     # print(f"\nplayer_cards: {player_cards}")
@@ -198,7 +187,7 @@ if start_game in ("d", "deal"):
                         end_of_game = True
 
             # If either's is equal to more than two cards, certain rules apply
-            elif len(player_cards) > 2 or len(dealer_cards) > 2:
+            elif len(player_cards) >= 3 and len(dealer_cards) >= 2:
 
                 # End Game: Both scores > 21
                 if dealer_score > 21 and player_score > 21:
@@ -240,14 +229,7 @@ if start_game in ("d", "deal"):
                         )
                         # Is it the end of the game
                         end_of_game = True
-                    else:
-                        normal_output()
-                        print(f" 🙄 DRAW!! 🙄\n")
-                        print(
-                            "---------------------------------------------------------------\n\n"
-                        )
-                        # Is it the end of the game
-                        end_of_game = True 
+
 
                 # If player score > 21 and dealer score < 21, the dealer wins
                 if player_score > 21 and dealer_score < 21:
@@ -328,6 +310,9 @@ if start_game in ("d", "deal"):
     # Check if there is a winner
     inspect_winner(dealer_score=dealer_score, player_score=player_score, end_of_game=end_of_game)
 
+    # if end_of_game = True RESTART
+    # *******************************************************************************
+
 
     # Only continue if both player's and dealer's scores are below 21
     while (end_of_game == False) and (player_score < 21 and dealer_score < 21):
@@ -374,9 +359,6 @@ if start_game in ("d", "deal"):
 
             # Check if there is a winner
             inspect_winner(dealer_score=dealer_score, player_score=player_score, end_of_game=end_of_game)
-
-
-
 
 elif start_game in ("e", "exit"):
     clear()
